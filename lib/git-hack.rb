@@ -1,7 +1,6 @@
 require "git-hack/version"
 
-module Git
-  module Hack
-    # Your code goes here...
-  end
+module GitHack
 end
+
+Dir["#{File.dirname(__FILE__)}/../lib/**/*.rb"].each { |f| require f }
