@@ -50,7 +50,7 @@ module GitHack
 			git.add(@workingdirectory)	
 		end
 		def commit(msg)
-			msg = auto_commit_msg if msg.empty?
+			msg ||= auto_commit_msg 
 			git.commit(msg,:add_all=>true)	
 		end
 		def auto_commit_msg
