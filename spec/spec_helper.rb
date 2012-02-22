@@ -13,8 +13,8 @@ end
 def del_dir(path)
 	FileUtils.rm_r(path,:force=>true) if File.directory?(path)
 end
-def add_for_commit
-	File.open("#{project_dir}/spec/temp/test_for_commit","a") do |file|
+def add_for_commit(path)
+	File.open(path,"a") do |file|
 		file.puts "test for commit"	
 	end
 end

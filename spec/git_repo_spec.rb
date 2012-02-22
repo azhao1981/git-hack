@@ -36,15 +36,13 @@ describe GitRepo do
 			before do
 				@dir = dir_under_git
 				refresh_dir(@dir)
-				#`git init "#{@dir}"`
+				Git.init(@dir) 
 				@gitrepo = GitRepo.new(@dir)
 				@gitrepo.get_gitdir(@dir)
 				@msg = "test commit "
 			end
 			it "Should be success " do
-        		#`cat "hello" >> "#{project_dir}/spec/tmp/hello_for_rspec"`
-				`cat "hello"`
-        		`echo "#{project_dir}"`
+				add_for_commit("#{@dir}/test")
 				@gitrepo.git_save(@msg).should be_success
 			end
 			after { del_dir(@dir) }
@@ -56,9 +54,12 @@ describe GitRepo do
 				@gitrepo = GitRepo.new(@dir)
 				@gitrepo.get_gitdir(@dir)
 			end
-			#it "Should be success " do
-		 	#	@gitrepo.git_save.should_not be_success
-			#end
+			it "Should execute false  " do
+				@gitrepo.git_save("false test commit").should_not be_success
+				#expect {  not raise a error any more
+		 		#	@gitrepo.git_save(@dir)
+				#}.to raise_error(SystemExit)  
+			end
 			after { del_dir(@dir) }
 		end
 	end #  end of #git_save est
