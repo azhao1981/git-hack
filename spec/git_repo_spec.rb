@@ -42,7 +42,7 @@ describe GitRepo do
 				@msg = "test commit "
 			end
 			it "Should be success " do
-        `cat "hello" >> "#{project_dir}/spec/tmp/hello_for_rspec"`
+        		`cat "hello" >> "#{project_dir}/spec/tmp/hello_for_rspec"`
 				@gitrepo.git_save(@msg).should be_success
 			end
 			after { del_dir(@dir) }
