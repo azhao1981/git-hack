@@ -51,7 +51,12 @@ module GitHack
 		end
 		def commit(msg)
 			msg ||= auto_commit_msg 
-			git.commit(msg,:add_all=>true)	
+			begin
+				git.commit(msg,:add_all=>true)	
+			rescue GitExecuteError => e
+				puts e.to_s
+			end
+
 		end
 		def auto_commit_msg
 			"auto commit" # TODO: 需要完成
