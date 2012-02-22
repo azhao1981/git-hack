@@ -50,7 +50,7 @@ module GitHack
 			git.add(@workingdirectory)	
 		end
 		def commit(msg)
-			git.commit(msg)	
+			git.commit(msg,:add_all=>true)	
 		end
 		def not_git_directory?
 			if @workingdirectory == nil
