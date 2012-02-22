@@ -16,7 +16,8 @@ module GitHack
 			@workingdirectory = get_gitdir(path)	
 		end
 		def git
-			@git ||= Git.open(@workingdirectory,:log => Logger.new(STDOUT)) 
+			@git ||= Git.open(@workingdirectory)
+			 #,:log => Logger.new(STDOUT)) 
 		end
 		# 得到本身或是上层目录中.git文件的路经
 		def get_gitdir(path)
