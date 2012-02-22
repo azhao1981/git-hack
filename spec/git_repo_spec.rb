@@ -43,6 +43,7 @@ describe GitRepo do
 			end
 			it "Should be success " do
         		#`cat "hello" >> "#{project_dir}/spec/tmp/hello_for_rspec"`
+				`cat "hello"`
         		`cat "#{project_dir}/spec/tmp/hello_for_rspec"`
 				@gitrepo.git_save(@msg).should be_success
 			end
