@@ -4,7 +4,7 @@ require "git-hack/version"
 
 Gem::Specification.new do |s|
   s.name        = "git-hack"
-  s.version     = Git::Hack::VERSION
+  s.version     = GitHack::VERSION
   s.authors     = ["weizhao"]
   s.email       = ["azhao.1981@gmail.com"]
   s.homepage    = ""
