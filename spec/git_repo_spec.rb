@@ -44,6 +44,8 @@ describe GitRepo do
 			it "Should be success " do
 				add_for_commit("#{@dir}/test")
 				@gitrepo.git_save(@msg).should be_success
+				# commit without change.
+				@gitrepo.git_save(@msg).should be_success
 			end
 			after { del_dir(@dir) }
 		end

@@ -53,7 +53,7 @@ module GitHack
 			msg ||= auto_commit_msg 
 			begin
 				git.commit(msg,:add_all=>true)	
-			rescue GitExecuteError => e
+			rescue Git::GitExecuteError => e
 				puts e.to_s
 			end
 
