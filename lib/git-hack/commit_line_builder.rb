@@ -7,7 +7,8 @@ module GitHack
 		def initialize(data,index)
 			super(data,index)
 			@is_message = false
-			@commit = { 'masseg' => '', parent => []}
+			@commit = { 'sha'=>nil, 'message' => '', 'parent' => [] }
+			@is_next_commit = nil
 		end
 		def process_line
 			@is_message
@@ -15,19 +16,33 @@ module GitHack
 			line = line.chomp
 			if line == ""
 				@is_message = !@is_message
-			elsif is_message
-				@commit.message << line+"\n"
+			elsif @is_message
+				@commit['message'] << line+"\n"
 			else
 				data = line.split
-				key = data.shift
-				value = data.join(" ")
-				if key == 'commit'
-					@commit['sha'] = value
-				end
-				if key == 'parent'
-					@commit[key] << value
+				@key = key = data.shift
+				@value = data.join(" ")
+
+				if @key == "\e[33mcommit"
+				 	if @commit['sha']
+						@is_next_commit = true
+					else
+						@commit['sha'] = @value
+					end
+				elsif @key == 'parent'
+					@commit[@key] << @value
 				else
+					@commit[@key] = @value
 				end
+			end
+			@object = @commit
+		end
+		def out?
+			if @is_next_commit
+				return true
+			else
+				@index += 1
+				return false
 			end
 		end
 	end

@@ -11,4 +11,7 @@ describe CommitLineBuilder do
 	end
 	specify { @data.size.should be > 1 }
 	specify { @linebuilder.object.should_not be nil }
+	it "#object show" do
+		ap @linebuilder.object
+	end
 end
