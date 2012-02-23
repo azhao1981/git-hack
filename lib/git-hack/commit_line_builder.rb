@@ -21,7 +21,12 @@ module GitHack
 				data = line.split
 				key = data.shift
 				value = data.join(" ")
-
+				if key == 'commit'
+					@commit['sha'] = value
+				end
+				if key == 'parent'
+					@commit[key] << value
+				else
 			end
 		end
 	end
