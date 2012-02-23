@@ -65,4 +65,25 @@ describe GitRepo do
 			after { del_dir(@dir) }
 		end
 	end #  end of #git_save est
+	describe "#checkout " do
+		before (:each) do
+			@dir = dir_no_git
+			refresh_dir(@dir)
+			Git.init(@dir) 
+			@gitrepo = GitRepo.new(@dir)
+			@gitrepo.get_gitdir(@dir)
+		end
+		context "When given 1,checkout to previous commitish" do
+			it "Should be success and no file newfile.txt" do
+				puts "Now begin test checkou :#{@dir}"
+				add_for_commit("#{@dir}/file.txt")
+				@gitrepo.git_save("init")
+				add_for_commit("#{@dir}/newfile.txt")
+				@gitrepo.git_save("commit second")
+				#@gitrepo.checkout(1).should be_success
+				#File.exist?("#{@dir}/newfile.txt").should be false
+			end
+		end
+		after { del_dir(@dir) }
+	end     #--end of #checkout
 end

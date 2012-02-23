@@ -2,6 +2,7 @@ source "http://ruby.taobao.org"
 
 gem 'colorize'
 gem 'git'
+gem 'awesome_print'
 
 group :development,:test do
   gem 'rspec'

@@ -1,6 +1,7 @@
 require "git"
 require 'logger'
-require 'colorize'
+require 'colorize'  
+require "ap"
 
 require_relative "../core_ext/path"
 
@@ -12,12 +13,17 @@ module GitHack
 	#
 	class GitRepo < Git::Path
 		include PathCommon
-		attr_accessor :git,:work,:remote
+		attr_accessor :git,:commits,:work,:remote
 		def initialize(path)
 			@workingdirectory = get_gitdir(path)	
+			@commits = []
 		end
 		def git
 			@git ||= Git.open(@workingdirectory ,:log => Logger.new(STDOUT)) 
+		end
+		def commits
+			@commits if !@commits.empty?
+			@commits = git.log
 		end
 		# 得到本身或是上层目录中.git文件的路经
 		def get_gitdir(path)
@@ -57,10 +63,29 @@ module GitHack
 			rescue Git::GitExecuteError => e
 				puts e.to_s.colorize(:green)
 			end
-
 		end
 		def auto_commit_msg
 			"auto commit" # TODO: 需要完成
+		end
+		# undo 如果有修改,保存,然后回到上一次提交
+		def undo
+			git_save if working_directory_change?
+			checkout(1)    # check_out 0.当前1.上一个.2.上上个....
+		end
+		# check out 出前第number个保存
+		def checkout(number,options={})
+			ready_to_execute
+			return self if not_git_directory?
+			puts "commits:".colorize(:red)
+			ap commits
+			git.reset(commits[1])
+			execute_success
+			self
+			
+		end
+		def init(dir)
+			@git = Git.init(dir)
+			@workingdirectory = dir
 		end
 		def not_git_directory?
 			if @workingdirectory == nil
