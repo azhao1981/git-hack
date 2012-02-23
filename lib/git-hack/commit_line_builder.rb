@@ -1,5 +1,10 @@
 
 require_relative "../core_ext/line_builder"
+class String
+	def uncolorize
+		self.gsub(/\e\[(\d+)*m/,"")	
+	end
+end
 
 
 module GitHack
@@ -14,7 +19,7 @@ module GitHack
 			@is_message
 			line = @data[@index]		
 			puts line
-			line = line.chomp.strip
+			line = line.chomp.uncolorize
 			if line == ""
 				@is_message = !@is_message
 			elsif @is_message
@@ -24,7 +29,7 @@ module GitHack
 				@key = key = data.shift
 				@value = data.join(" ")
 
-				if @key == "\e[33mcommit"
+				if @key == "commit"
 				 	if @commit['sha']
 						@is_next_commit = true
 					else
