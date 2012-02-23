@@ -13,7 +13,7 @@ module GitHack
 			@is_message
 			line = @data[@index]		
 			line = line.chomp
-			if line = ""
+			if line == ""
 				@is_message = !@is_message
 			elsif is_message
 				@commit.message << line+"\n"
@@ -27,6 +27,7 @@ module GitHack
 				if key == 'parent'
 					@commit[key] << value
 				else
+				end
 			end
 		end
 	end
