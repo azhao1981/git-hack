@@ -5,7 +5,7 @@ describe CommitLineBuilder do
 		g = Git.open(".")
 		l = Git::Lib.new(g)
 		opts = ["--pretty=raw"]
-		@data = l.command_lines('log',opts)
+		@data = l.command_lines_patch('log',opts)
 		@linebuilder = CommitLineBuilder.new(@data,0)
 		@linebuilder.parse
 	end

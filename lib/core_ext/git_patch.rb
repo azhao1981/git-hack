@@ -23,5 +23,8 @@ module Git
 			# putsrocess_commit_data(full_log)
 			process_commit_data(full_log,"commit")
 		end
+		def command_lines_patch(command,opt = [],chdir = true,redirect = '')
+			command_lines(command,opt,chdir,redirect)
+		end
 	end
 end

@@ -13,7 +13,8 @@ module GitHack
 		def process_line
 			@is_message
 			line = @data[@index]		
-			line = line.chomp
+			puts line
+			line = line.chomp.strip
 			if line == ""
 				@is_message = !@is_message
 			elsif @is_message

@@ -1,6 +1,6 @@
 require "git-hack/version"
-Dir["#{File.dirname(__FILE__)}/**/*.rb"].each { |f| require f }
 require "git"
+Dir["#{File.dirname(__FILE__)}/**/*.rb"].each { |f| require f }
 
 module GitHack
 	def self.current
