@@ -1,5 +1,5 @@
 
-require_relative "../git-hack"
+require_relative "../core_ext/line_builder"
 
 
 module GitHack
