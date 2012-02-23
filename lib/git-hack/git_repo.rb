@@ -1,5 +1,6 @@
 require "git"
 require 'logger'
+require 'colorize'
 
 require_relative "../core_ext/path"
 
@@ -54,7 +55,7 @@ module GitHack
 			begin
 				git.commit(msg,:add_all=>true)	
 			rescue Git::GitExecuteError => e
-				puts e.to_s
+				puts e.to_s.colorize(:green)
 			end
 
 		end
