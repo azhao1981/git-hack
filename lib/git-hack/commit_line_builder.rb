@@ -13,12 +13,11 @@ module GitHack
 			super(data,index)
 			@is_message = false
 			@commit = { 'sha'=>nil, 'message' => '', 'parent' => [] }
-			@is_next_commit = nil
+			@is_next_commit = false
 		end
 		def process_line
 			@is_message
 			line = @data[@index]		
-			puts line
 			line = line.chomp.uncolorize
 			if line == ""
 				@is_message = !@is_message
