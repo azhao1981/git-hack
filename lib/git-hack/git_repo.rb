@@ -75,13 +75,13 @@ module GitHack
 			git_save if working_directory_change?
 			checkout(1)    # check_out 0.当前1.上一个.2.上上个....
 		end
-		# check out 出前第number个保存
-		def checkout(number,options={})
+		# 回到前第number个保存
+		def backto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
 			puts "commits:".colorize(:red)
 			ap commits
-			git.reset(commits[1].commit['sha'])
+			git.reset_hard(commits[1].commit['sha'])
 			execute_success
 			self
 		end
