@@ -76,7 +76,7 @@ module GitHack
 			checkout(1)    # check_out 0.当前1.上一个.2.上上个....
 		end
 		# 回到前第number个保存
-		def backto(number,options={})
+		def goto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
 			puts "commits:".colorize(:red)

@@ -65,7 +65,7 @@ describe GitRepo do
 			after { del_dir(@dir) }
 		end
 	end #  end of #git_save est
-	describe "#checkout " do
+	describe "#goto " do
 		before (:each) do
 			@dir = dir_no_git
 			refresh_dir(@dir)
@@ -77,16 +77,26 @@ describe GitRepo do
 			add_for_commit("#{@dir}/newfile.txt")
 			@gitrepo.git_save("commit second")
 		end
-		context "When given 1,checkout to previous commitish" do
+		context "When given 1" do
 			it "Should be success and no file newfile.txt" do
-				@gitrepo.backto(1).should be_success
+				@gitrepo.goto(1).should be_success
 				File.exist?("#{@dir}/newfile.txt").should be false
 			end
 			it "Should still get 2 commit" do
 				@gitrepo.commits.size.should == 2
-				@gitrepo.backto(1).should be_success
+				@gitrepo.goto(1).should be_success
 				@gitrepo.commits.size.should == 2
-				@gitrepo.backto(0).should be_success
+				@gitrepo.goto(0).should be_success
+				File.exist?("#{@dir}/newfile.txt").should be true
+			end
+		end
+		context "When given 2," do
+			it "Should goto the last commit" do
+				@gitrepo.goto(1).should be_success
+				File.exist?("#{@dir}/newfile.txt").should be false
+				@g = GitRepo.new(@dir)
+				@g.get_gitdir(@dir)
+				@gitrepo.goto(0).should be_success
 				File.exist?("#{@dir}/newfile.txt").should be true
 			end
 		end
