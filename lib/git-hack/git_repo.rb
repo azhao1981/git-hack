@@ -75,12 +75,16 @@ module GitHack
 			git_save if working_directory_change?
 			checkout(1)    # check_out 0.当前1.上一个.2.上上个....
 		end
+		def git_goto(number,options={})
+			number = number.to_i
+			goto(number,options)
+			
+		end
 		# 回到前第number个保存
+		#
 		def goto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
-			puts "commits:".colorize(:red)
-			ap commits
 			git.reset_hard(commits[number].commit['sha'])
 			execute_success
 			self
@@ -91,7 +95,6 @@ module GitHack
 		end
 		def not_git_directory?
 			if @workingdirectory == nil
-				puts "Init first,run git init"
 				return true
 			end
 			return false
