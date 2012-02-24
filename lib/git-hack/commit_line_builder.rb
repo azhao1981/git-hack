@@ -9,6 +9,7 @@ end
 
 module GitHack
 	class CommitLineBuilder < LineBuilder
+		attr_accessor :commit
 		def initialize(data,index)
 			super(data,index)
 			@is_message = false

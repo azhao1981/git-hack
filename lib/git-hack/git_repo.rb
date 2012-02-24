@@ -22,8 +22,11 @@ module GitHack
 			@git ||= Git.open(@workingdirectory ,:log => Logger.new(STDOUT)) 
 		end
 		def commits
-			@commits if !@commits.empty?
-			@commits = git.log
+			return @commits if !@commits.empty?
+			l = Git::Lib.new(git)
+			opts = ["--pretty=raw"]
+			@data = l.command_lines_patch('log',opts)
+			return @commits = CommitLineBuilder.new(@data,0).find_all
 		end
 		# 得到本身或是上层目录中.git文件的路经
 		def get_gitdir(path)
@@ -78,10 +81,9 @@ module GitHack
 			return self if not_git_directory?
 			puts "commits:".colorize(:red)
 			ap commits
-			git.reset(commits[1])
+			git.reset(commits[1].commit['sha'])
 			execute_success
 			self
-			
 		end
 		def init(dir)
 			@git = Git.init(dir)

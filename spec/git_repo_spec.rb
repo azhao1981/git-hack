@@ -80,8 +80,9 @@ describe GitRepo do
 				@gitrepo.git_save("init")
 				add_for_commit("#{@dir}/newfile.txt")
 				@gitrepo.git_save("commit second")
-				#@gitrepo.checkout(1).should be_success
-				#File.exist?("#{@dir}/newfile.txt").should be false
+				@gitrepo.checkout(1).should be_success
+
+				File.exist?("#{@dir}/newfile.txt").should be false
 			end
 		end
 		after { del_dir(@dir) }
