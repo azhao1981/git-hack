@@ -86,6 +86,8 @@ describe GitRepo do
 				@gitrepo.commits.size.should == 2
 				@gitrepo.backto(1).should be_success
 				@gitrepo.commits.size.should == 2
+				@gitrepo.backto(0).should be_success
+				File.exist?("#{@dir}/newfile.txt").should be true
 			end
 		end
 		after { del_dir(@dir) }
