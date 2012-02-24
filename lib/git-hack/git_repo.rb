@@ -81,7 +81,7 @@ module GitHack
 			return self if not_git_directory?
 			puts "commits:".colorize(:red)
 			ap commits
-			git.reset_hard(commits[1].commit['sha'])
+			git.reset_hard(commits[number].commit['sha'])
 			execute_success
 			self
 		end

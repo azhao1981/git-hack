@@ -72,17 +72,20 @@ describe GitRepo do
 			Git.init(@dir) 
 			@gitrepo = GitRepo.new(@dir)
 			@gitrepo.get_gitdir(@dir)
+			add_for_commit("#{@dir}/file.txt")
+			@gitrepo.git_save("init")
+			add_for_commit("#{@dir}/newfile.txt")
+			@gitrepo.git_save("commit second")
 		end
 		context "When given 1,checkout to previous commitish" do
 			it "Should be success and no file newfile.txt" do
-				puts "Now begin test checkou :#{@dir}"
-				add_for_commit("#{@dir}/file.txt")
-				@gitrepo.git_save("init")
-				add_for_commit("#{@dir}/newfile.txt")
-				@gitrepo.git_save("commit second")
 				@gitrepo.backto(1).should be_success
-
 				File.exist?("#{@dir}/newfile.txt").should be false
+			end
+			it "Should still get 2 commit" do
+				@gitrepo.commits.size.should == 2
+				@gitrepo.backto(1).should be_success
+				@gitrepo.commits.size.should == 2
 			end
 		end
 		after { del_dir(@dir) }
