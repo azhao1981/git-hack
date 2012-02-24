@@ -13,7 +13,7 @@ module GitHack
 	#
 	class GitRepo < Git::Path
 		include PathCommon
-		attr_accessor :git,:commits,:work,:remote
+		attr_accessor :git,:commits,:work,:remote,:current_commit
 		def initialize(path)
 			@workingdirectory = get_gitdir(path)	
 			@commits = []
@@ -70,10 +70,19 @@ module GitHack
 		def auto_commit_msg
 			"auto commit" # TODO: 需要完成
 		end
-		# undo 如果有修改,保存,然后回到上一次提交
+		# undo 回到上一次提交
 		def undo
-			git_save if working_directory_change?
-			checkout(1)    # check_out 0.当前1.上一个.2.上上个....
+			git_goto(1)
+		end
+		# redo 到当前提交的下一个提交
+		def redo
+			ready_to_execute
+			return self if not_git_directory?
+			next_commit = get_next_commit
+			return self if !next_commit
+			git.reset_hard(next_commit)
+			execute_success
+			self
 		end
 		def git_goto(number,options={})
 			number = number.to_i
@@ -95,9 +104,38 @@ module GitHack
 		end
 		def not_git_directory?
 			if @workingdirectory == nil
+				puts "Not a git directory ,run `git init` first"
 				return true
 			end
 			return false
+		end
+		def get_next_commit 
+			file = File.open("#{@workingdirectory}/.git/logs/HEAD")
+			data = []
+			file.each { |line|
+				data << line
+			}
+			commit_data = SimpleLineBuilder.new(data,0).find_all
+			commit = commit_data.find do |c| 
+				c.object == current_commit 
+			end
+			commit_sha = commit ?  commit.value : nil
+		end
+		def current_commit
+			@current_commit if @current_commit
+			data = data_from_file("#{@workingdirectory}/.git/HEAD")
+			commit_file_data = SimpleLineBuilder.new(data,0).parse
+			commit_file = commit_file_data.value
+			@current_commit = data_from_file("#{@workingdirectory}/.git/#{commit_file}")
+			@current_commit = @current_commit[0].chomp
+		end
+		def data_from_file(path)
+			file = File.open(path)
+			data = []
+			file.each { |line|
+				data << line
+			}
+			data 
 		end
 	end
 end

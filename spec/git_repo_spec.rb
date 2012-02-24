@@ -102,4 +102,35 @@ describe GitRepo do
 		end
 		after { del_dir(@dir) }
 	end     #--end of #checkout
+	describe "#redo" do
+		before (:each) do
+			@dir = dir_no_git
+			refresh_dir(@dir)
+			Git.init(@dir) 
+			@gitrepo = GitRepo.new(@dir)
+			@gitrepo.get_gitdir(@dir)
+			add_for_commit("#{@dir}/file.txt")
+			@gitrepo.git_save("init")
+			add_for_commit("#{@dir}/newfile.txt")
+			@gitrepo.git_save("commit second")
+		end
+		context "When no undo" do
+			it "Should be failed" do
+				@gitrepo.redo.should_not be_success
+			end
+		end
+		context "When undo first" do
+			it "Should be success" do
+				File.exist?("#{@dir}/newfile.txt").should be true
+				@gitrepo.undo
+				File.exist?("#{@dir}/newfile.txt").should be false
+				@g = GitRepo.new(@dir)
+				@g.get_gitdir(@dir)
+				@g.redo.should be_success
+				File.exist?("#{@dir}/newfile.txt").should be true
+			end
+		end
+		after{ del_dir(@dir) }
+	end
+		
 end
