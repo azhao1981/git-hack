@@ -8,8 +8,7 @@ module GitHack
 			super(data,index)
 		end
 		def process_line
-			line = @data[@index]
-			line = line.chomp.split
+			line = @data[@index].chomp.split
 			@object = line.shift
 			@value = line.shift
 		end

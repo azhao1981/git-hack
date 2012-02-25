@@ -12,14 +12,16 @@ describe LineBuilder do
 	end
 	specify { @data.size.should be > 1 }
 	specify { @linebuilder.object.should_not be nil }
+	specify { @linebuilder.all_objects.size.should be > 0 }
 	specify { @linebuilder.is_over?.should_not be true }
 	specify { @linebuilder.get_next.should_not be nil }
 	specify { @linebuilder.rest.size.should be > 0 }
 	specify { @linebuilder.find_all.size.should be > 0 }
+	specify { @linebuilder.data.should be @linebuilder.get_next.data }
+	# 用于查看内部数据的查看spec
 	it "Show Some data" do
 		puts @linebuilder.index
 		puts @data.size
-		
 	end
 	context "When is come to the last" do
 		before do
