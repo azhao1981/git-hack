@@ -5,11 +5,6 @@ require "spec_helper"
 
 
 describe GitRepo do
-	# test data
-	let(:dir_with_git) { project_dir }
-	let(:dir_under_git) { join(project_dir,"tmp_git_hack_test") }
-	let(:dir_no_git) { "#{ENV["HOME"]}/tmp_git_hack_test" }
-
 	describe	"#get_gitdir " do
 		context "When given a .git directory" do
 			specify { GitRepo.new(dir_with_git).get_gitdir(dir_with_git).should == dir_with_git }

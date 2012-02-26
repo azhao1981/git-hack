@@ -16,17 +16,18 @@ module GitHack
 		attr_accessor :git,:commits,:work,:remote,:current_commit
 		def initialize(path)
 			@workingdirectory = get_gitdir(path)	
-			@commits = []
+			@git = nil
+			@commits = nil
+			@commit_facade = nil
 		end
 		def git
 			@git ||= Git.open(@workingdirectory ,:log => Logger.new(STDOUT)) 
 		end
+		def commit_facade
+			@commit_facade ||= CommitFacade.new(@workingdirectory)
+		end
 		def commits
-			return @commits if !@commits.empty?
-			l = Git::Lib.new(git)
-			opts = ["--pretty=raw"]
-			@data = l.command_lines_patch('log',opts)
-			return @commits = CommitLineBuilder.new(@data,0).find_all
+			@commits ||= commit_facade.get_log_commits
 		end
 		# 得到本身或是上层目录中.git文件的路经
 		def get_gitdir(path)
@@ -78,26 +79,25 @@ module GitHack
 		def redo
 			ready_to_execute
 			return self if not_git_directory?
-			next_commit = get_next_commit
+			next_commit = commit_facade.get_next_commit
 			return self if !next_commit
 			git.reset_hard(next_commit)
 			execute_success
 			self
 		end
 		def git_goto(number,options={})
-			number = number.to_i
-			goto(number,options)
-			
+			goto(number.to_i,options)
 		end
 		# 回到前第number个保存
 		#
 		def goto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
-			git.reset_hard(commits[number].commit['sha'])
+			git.reset_hard(commits[number].sha)
 			execute_success
 			self
 		end
+		# 初始化空文件夹成为git库
 		def init(dir)
 			@git = Git.init(dir)
 			@workingdirectory = dir
@@ -109,33 +109,6 @@ module GitHack
 			end
 			return false
 		end
-		def get_next_commit 
-			file = File.open("#{@workingdirectory}/.git/logs/HEAD")
-			data = []
-			file.each { |line|
-				data << line
-			}
-			commit_data = SimpleLineBuilder.new(data,0).find_all
-			commit = commit_data.find do |c| 
-				c.object == current_commit 
-			end
-			commit_sha = commit ?  commit.value : nil
-		end
-		def current_commit
-			@current_commit if @current_commit
-			data = data_from_file("#{@workingdirectory}/.git/HEAD")
-			commit_file_data = SimpleLineBuilder.new(data,0).parse
-			commit_file = commit_file_data.value
-			@current_commit = data_from_file("#{@workingdirectory}/.git/#{commit_file}")
-			@current_commit = @current_commit[0].chomp
-		end
-		def data_from_file(path)
-			file = File.open(path)
-			data = []
-			file.each { |line|
-				data << line
-			}
-			data 
-		end
+	
 	end
 end

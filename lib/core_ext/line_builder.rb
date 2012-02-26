@@ -39,7 +39,7 @@ class LineBuilder
 		@object ||= parse.object
 	end
 	def all_objects
-		@all_objects ||= find_all.each { |b| b.object } 
+		@all_objects ||= find_all.collect { |b| b.object } 
 	end
 	#
 	# 进入条件,默认直接进入
@@ -74,6 +74,6 @@ class LineBuilder
 	def find_all
 		return [] if is_over? && @object == nil  # 给定的index已经超出data
 		parse unless @is_parse
-		[self] + rest
+		@all_objects = [self] + rest
 	end
 end

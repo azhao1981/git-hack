@@ -1,7 +1,9 @@
 require_relative "../lib/git-hack"
+require_relative "test_env"
 
 include GitHack
 include PathCommon
+include TestENV
 require "fileutils"
 require "colorize"
 
