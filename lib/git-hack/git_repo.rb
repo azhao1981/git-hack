@@ -73,6 +73,7 @@ module GitHack
 		def goto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
+			ap commits
 			git.reset_hard(commits[number].sha)
 			execute_success
 			self
