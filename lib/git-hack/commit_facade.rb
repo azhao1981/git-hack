@@ -14,9 +14,9 @@ module GitHack
 		def get_log_commits
 			git = Git.open(@dir ,:log => Logger.new(STDOUT)) 
 			l = Git::Lib.new(git)
-			opts = ["--pretty=raw"]
+			# String的uncolorize没能生效,使用这个
+			opts = ["--pretty=raw --no-color"]
 			data = l.command_lines_patch('log',opts)
-			ap data
 			return @commits = CommitLineBuilder.new(data,0).all_objects
 		end
 		def get_next_commit 

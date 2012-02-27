@@ -5,6 +5,7 @@ require_relative "../core_ext/line_builder"
 # git log 数据可能被加色,本补丁删除加色信息
 class String
 	def uncolorize
+		# BUG: 在bin/git* 下运行可以去掉,但是安装gem 后就不能了????
 		self.gsub(/\e\[(\d+)*m/,"")  # 以除 \e[30e]	 颜色标记
 	end
 end
@@ -26,7 +27,6 @@ module GitHack
 		# 重写#process_line
 		def process_line
 			line = @data[@index].chomp.uncolorize
-			puts "|#{line}#"
 			if line == ""          # msg信息以上下两个"" 分隔
 				@is_message = !@is_message
 			elsif @is_message
