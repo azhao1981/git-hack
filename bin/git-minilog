@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require (File.expand_path('../../lib/git-hack', __FILE__))
+require 'awesome_print'
+
+ap GitHack::GitRepo.new(".").commits
