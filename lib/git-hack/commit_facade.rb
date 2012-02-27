@@ -16,6 +16,7 @@ module GitHack
 			l = Git::Lib.new(git)
 			opts = ["--pretty=raw"]
 			data = l.command_lines_patch('log',opts)
+			ap data
 			return @commits = CommitLineBuilder.new(data,0).all_objects
 		end
 		def get_next_commit 

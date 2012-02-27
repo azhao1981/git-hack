@@ -26,6 +26,7 @@ module GitHack
 		# 重写#process_line
 		def process_line
 			line = @data[@index].chomp.uncolorize
+			puts "|#{line}#"
 			if line == ""          # msg信息以上下两个"" 分隔
 				@is_message = !@is_message
 			elsif @is_message
