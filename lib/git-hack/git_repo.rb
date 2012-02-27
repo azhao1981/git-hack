@@ -83,6 +83,9 @@ module GitHack
 			@git = Git.init(dir)
 			@workingdirectory = dir
 		end
+		def show_commits
+			ap commits
+		end
 		#
 		# 得到本身或是上层目录中.git文件的路经
 		#

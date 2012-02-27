@@ -6,7 +6,7 @@
 module Git
 	class Lib
 		def full_log_commits(opts = {})
-			arr_opts = ['--pretty=raw']
+			arr_opts = ['--no-color --pretty=raw']
 			arr_opts << "-#{opts[:count]}" if opts[:count]
 			arr_opts << "--skip=#{opts[:skip]}" if opts[:skip]
 			arr_opts << "--since=#{opts[:since]}" if opts[:since].is_a? String

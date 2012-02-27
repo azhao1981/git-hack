@@ -15,7 +15,7 @@ module GitHack
 			git = Git.open(@dir ,:log => Logger.new(STDOUT)) 
 			l = Git::Lib.new(git)
 			# String的uncolorize没能生效,使用这个
-			opts = ["--pretty=raw --no-color"]
+			opts = ["--pretty=raw"]
 			data = l.command_lines_patch('log',opts)
 			return @commits = CommitLineBuilder.new(data,0).all_objects
 		end
