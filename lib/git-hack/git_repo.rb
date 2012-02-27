@@ -56,7 +56,7 @@ module GitHack
 
 		# undo 回到上一次提交
 		def undo
-			goto("1")
+			goto(1)
 		end
 		# redo 到当前提交的下一个提交
 		def redo
@@ -73,7 +73,7 @@ module GitHack
 		def goto(number,options={})
 			ready_to_execute
 			return self if not_git_directory?
-			git.reset_hard(commits[number.to_i].sha)
+			git.reset_hard(commits[number].sha)
 			execute_success
 			self
 		end
