@@ -56,7 +56,7 @@ module GitHack
 
 		# undo 回到上一次提交
 		def undo
-			goto(1)
+			goto("1")
 		end
 		# redo 到当前提交的下一个提交
 		def redo
