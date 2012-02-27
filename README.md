@@ -1,9 +1,9 @@
 # git-hack
 
-I don't known why logic of git is sooooo horrible!! And I make this tools for people to say "WOW,This is git !!!"
+目标是制作一个简单易用的git 工具
 
-0. git-save git-redo git-undo git-backto They look easy to understand? Wow,This is git. 
-1. 
+0. git-save git-redo git-undo git-backto They look easy to understand?  
+1. remote comming son..
 
 
 ## Installing
@@ -14,12 +14,16 @@ All you need to do is grab the gem:
 
 
 ### save
+		git save "msg"
 
 ### undo
+		git undo                     # 回到上一个提交
 
 ### redo
+		git redo 										# 前进到下一个提交
 
 ### backto
+		git backto [number]         # 跳到指定的提交
 
 ## Copyright
 

@@ -3,6 +3,8 @@ require "git"
 Dir["#{File.dirname(__FILE__)}/**/*.rb"].each { |f| require f }
 
 module GitHack
+	include PathCommon
+	include SaveExecute
 	def self.current
 		@current || get_dir('.')
 	end
