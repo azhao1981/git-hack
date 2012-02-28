@@ -6,6 +6,7 @@
 module Git
 	class Lib
 		def full_log_commits(opts = {})
+			# String的uncolorize没能生效,使用这个
 			arr_opts = ['--no-color --pretty=raw']
 			arr_opts << "-#{opts[:count]}" if opts[:count]
 			arr_opts << "--skip=#{opts[:skip]}" if opts[:skip]

@@ -24,4 +24,5 @@ Gem::Specification.new do |s|
   # s.add_runtime_dependency "rest-client"
   s.add_runtime_dependency "colorize"
   s.add_runtime_dependency "git"
+  s.add_runtime_dependency "awesome_print"
 end
