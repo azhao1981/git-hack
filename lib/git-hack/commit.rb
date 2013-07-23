@@ -1,5 +1,5 @@
 # Commit类对应git当中的提交对象
-require_relative "../git-hack"
+require "git-hack"
 
 
 module GitHack

@@ -1,6 +1,6 @@
 # CommitLineBuilder类用于得到库内的提交信息
 # 现阶段从git log命令得到主数据
-require_relative "../core_ext/line_builder"
+require "core_ext/line_builder"
 
 # git log 数据可能被加色,本补丁删除加色信息
 class String

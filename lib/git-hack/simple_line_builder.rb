@@ -1,5 +1,5 @@
 
-require_relative "../core_ext/line_builder"
+require "core_ext/line_builder"
 
 module GitHack
 	class SimpleLineBuilder < LineBuilder

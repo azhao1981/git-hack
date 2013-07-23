@@ -3,9 +3,9 @@ require 'logger'
 require 'colorize'  
 require "ap"
 
-require_relative "../git-hack"
-require_relative "../core_ext/path"
-require_relative "../core_ext/save_execute"
+require "git-hack"
+require "core_ext/path"
+require "core_ext/save_execute"
 
 module GitHack
 	# GitRepo类拥有git的所有

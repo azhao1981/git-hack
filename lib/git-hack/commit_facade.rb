@@ -1,7 +1,7 @@
 # CommitFacade 类提供一个对外的git commit的接口
 #
-require_relative "commit_line_builder"
-require_relative "simple_line_builder"
+require "git-hack/commit_line_builder"
+require "git-hack/simple_line_builder"
 
 module GitHack
 	class CommitFacade

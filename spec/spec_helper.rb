@@ -1,5 +1,5 @@
-require_relative "../lib/git-hack"
-require_relative "test_env"
+require "git-hack"
+require "test_env"
 
 include GitHack
 include PathCommon
